@@ -3,21 +3,20 @@ import mediapipe as mp
 import math
 import numpy as np
 
-# ---------------- MediaPipe ----------------
+
 mp_hands = mp.solutions.hands
 mp_draw = mp.solutions.drawing_utils
 hands = mp_hands.Hands(max_num_hands=1,
                        min_detection_confidence=0.7,
                        min_tracking_confidence=0.7)
 
-# ---------------- Webcam ----------------
+
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 960)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 540)
 ret, frame = cap.read()
 h, w, _ = frame.shape
-
-# ---------------- Storage ----------------
+#STORING 
 strokes = []
 current_stroke = []
 particles = []
@@ -28,11 +27,11 @@ PINCH_THRESHOLD = 35
 smooth_factor = 0.8
 prev_x, prev_y = 0,0
 
-# tools
+
 line_start = None
 rect_start = None
 
-# ---------------- Modes ----------------
+
 MODE_IDLE = 0
 MODE_DRAW = 1
 MODE_MOVE = 2
@@ -42,7 +41,7 @@ MODE_ERASE = 5
 
 mode = MODE_IDLE
 
-# ---------------- Helpers ----------------
+
 def distance(p1,p2):
     return math.hypot(p1[0]-p2[0], p1[1]-p2[1])
 
@@ -120,7 +119,7 @@ def fingers_up(lm, hand_label="Right"):
     return fingers
 
 
-# ---------------- Main Loop ----------------
+#MAIN loop
 while True:
 
     ret, frame = cap.read()
@@ -159,14 +158,14 @@ while True:
         all_open = all(finger_state)
         fist = not any(finger_state)
 
-        # ---------------- Gestures ----------------
+        #all geustures
 
         if fist:
             strokes=[]
             current_stroke=[]
             moving_stroke=None
 
-        # ERASE (Thumb)
+        # ERASE (Thumbs up)
         elif finger_state == [1,0,0,0,0]:
 
             mode = MODE_ERASE
@@ -190,7 +189,7 @@ while True:
             mode = MODE_IDLE
 
 
-        # ---------------- Draw ----------------
+        # drawing
         if mode == MODE_DRAW:
 
             if prev_x==0 and prev_y==0:
@@ -212,7 +211,7 @@ while True:
                 current_stroke=[]
 
 
-        # ---------------- Line Tool ----------------
+        # straight line
         if mode == MODE_LINE:
 
             if line_start is None:
@@ -232,7 +231,7 @@ while True:
             line_start=None
 
 
-        # ---------------- Rectangle Tool ----------------
+        # rectangle
         if mode == MODE_RECT:
 
             if rect_start is None:
@@ -252,7 +251,7 @@ while True:
             rect_start=None
 
 
-        # ---------------- Erase ----------------
+        # eraser
         if mode == MODE_ERASE:
 
             erase_radius = 25
@@ -288,7 +287,7 @@ while True:
 
             strokes = new_strokes
 
-        # ---------------- Move ----------------
+        # pinch & move
         if mode == MODE_MOVE:
 
             pinch_pos=((ix+tx)//2,(iy+ty)//2)
@@ -333,12 +332,12 @@ while True:
             prev_pinch_pos=None
 
 
-    # ---------------- Store Draw ----------------
+  
     if index_pos and mode==MODE_DRAW:
         current_stroke.append(index_pos)
 
 
-    # ---------------- Physics ----------------
+    # bounce
     for s in strokes:
 
         if s.get("moving", False):
@@ -373,7 +372,7 @@ while True:
                 s["moving"] = False
 
 
-    # ---------------- Particle Physics ----------------
+    #particles
     for p in particles:
 
         p["x"] += p["vx"]
@@ -384,10 +383,9 @@ while True:
 
     particles = [p for p in particles if p["life"] > 0]
 
-    # --- Separate glow canvas ---
     glow_canvas = np.zeros_like(canvas)
 
-    # Draw glow (thicker, same color)
+
     for s in strokes:
         color = (255, 200, 50)
         if s==moving_stroke:
@@ -402,14 +400,13 @@ while True:
         p1 = current_stroke[i-1]
         p2 = current_stroke[i]
         cv2.line(glow_canvas, p1, p2, (255, 200, 50), 6)
-
-    # Apply blur to the glow
+      
     blur1 = cv2.GaussianBlur(glow_canvas, (11,11), 0)
     blur2 = cv2.GaussianBlur(glow_canvas, (21,21), 0)
     glow_overlay = cv2.addWeighted(blur1, 0.5, blur2, 0.5, 0)
     glow_overlay = cv2.addWeighted(glow_overlay, 1, canvas, 1, 0)
 
-    # Draw the sharp core lines on top
+
     for s in strokes:
         color = (255, 200, 50)
         if s==moving_stroke:
@@ -425,7 +422,6 @@ while True:
         p2 = current_stroke[i]
         cv2.line(glow_overlay, p1, p2, (255, 200, 50), 2)
 
-    # ---------------- Draw Sparks ----------------
     for p in particles:
 
         x = int(p["x"])
