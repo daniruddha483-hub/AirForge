@@ -2,11 +2,11 @@ AirForge
 
 AirForge is a Python-based touchless CAD sketching application that uses hand gestures to create and manipulate basic geometric designs through a webcam.
 
-Overview
+Overview:
 
 The project uses computer webcam and hand tracking to turn hand movements into CAD-style drawing actions. The main goal is to experiment with a more natural way of interacting with geometric design software without relying entirely on a mouse and keyboard.
 
-Features
+Features:
 
 * Real-time hand tracking
 * Gesture-based drawing
@@ -23,11 +23,11 @@ I Used :
 * MediaPipe
 * NumPy
 
-How It Works
+How It Works:
 
 The webcam in the laptop/PC captures the user's hand movements and MediaPipe detects the hand landmark points. AirForge processes these landmarks to identify simple gestures (ex:pointer up or index and poiter up gestures) and converts them into drawing or editing actions on the black workspace.
 
-How to use 
+How to use:
 
 free hand drawing - pointer finger up and all others should be down 
 
@@ -41,7 +41,8 @@ erase parts- thumb up and drag it over the parts you want to erase
 
 move/throw the strokes - pinch and move or pinch and throw it around the canvas
 
-Installation
+
+Installation:
 
 Clone the repository:
 git clone https://github.com/daniruddha483-hub/AirForge.git
