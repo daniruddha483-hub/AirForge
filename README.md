@@ -30,10 +30,16 @@ The webcam in the laptop/PC captures the user's hand movements and MediaPipe det
 How to use 
 
 free hand drawing - pointer finger up and all others should be down 
+
 straight line drawing- pointer and middle finger up
+
 rectangle/square drawing- pointer and pinky up all other should be down drag for the size and put all other fingers up to release the brush 
+
 clear canvas - fist
+
 erase parts- thumb up and drag it over the parts you want to erase
+
+move/throw the strokes - pinch and move or pinch and throw it around the canvas
 
 Installation
 
