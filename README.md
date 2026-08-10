@@ -27,6 +27,14 @@ How It Works
 
 The webcam in the laptop/PC captures the user's hand movements and MediaPipe detects the hand landmark points. AirForge processes these landmarks to identify simple gestures (ex:pointer up or index and poiter up gestures) and converts them into drawing or editing actions on the black workspace.
 
+How to use 
+
+free hand drawing - pointer finger up and all others should be down 
+straight line drawing- pointer and middle finger up
+rectangle/square drawing- pointer and pinky up all other should be down drag for the size and put all other fingers up to release the brush 
+clear canvas - fist
+erase parts- thumb up and drag it over the parts you want to erase
+
 Installation
 
 Clone the repository:
