@@ -32,7 +32,8 @@ ret, frame = cap.read()
 if not ret:
     print("Failed to open camera.")
     cap.release()
-    exit()
+    cv2.destroyAllWindows()
+    raise SystemExit
 
 h, w, _ = frame.shape
 
