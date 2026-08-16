@@ -29,34 +29,17 @@ The webcam in the laptop/PC captures the user's hand movements and MediaPipe det
 
 How to use:
 
-free hand drawing - pointer finger up and all others should be down 
+pointer up - free hand drawing 
 
-straight line drawing- pointer and middle finger up
+pointer + middle finger - straight line drawing
 
-rectangle/square drawing- pointer and pinky up all other should be down drag for the size and put all other fingers up to release the brush 
+pointer + pinky - draw rectangle/square
 
-clear canvas - fist
+thumb - erase parts
 
-erase parts- thumb up and drag it over the parts you want to erase
+pinch - to move or throw it around
 
-move/throw the strokes - pinch and move or pinch and throw it around the canvas
-
-
-Installation:
-
-Clone the repository:
-git clone https://github.com/daniruddha483-hub/AirForge.git
-cd AirForge
-
-
-Install the required libraries:
-pip install opencv-python mediapipe numpy
-
-
-Run the application:
-python AirCAD.py
-
-A working webcam is required.
+fist - clear cavnas
 
 Project Status
 
